@@ -21,7 +21,7 @@
 
 // Slack stuff
 const SLACK_TOKEN      = 'XXXXXXXXXXXXXXXXXXXXXXXXXX';
-const SLACK_CHANNEL    = '#Le-Monde-live';
+const SLACK_CHANNEL    = '#le-monde-live';
 const SLACK_BOT_NAME   = 'Le Monde';
 const SLACK_BOT_AVATAR = 'http://cdnmo.coveritlive.com/media/avitars/phpFpVVqziconelemondefrgrise1.jpg';
 
