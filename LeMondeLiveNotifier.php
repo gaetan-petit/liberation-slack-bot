@@ -22,8 +22,6 @@
 // Slack stuff
 const SLACK_TOKEN      = 'XXXXXXXXXXXXXXXXXXXXXXXXXX';
 const SLACK_CHANNEL    = '#le-monde-live';
-const SLACK_BOT_NAME   = 'Le Monde';
-const SLACK_BOT_AVATAR = 'http://cdnmo.coveritlive.com/media/avitars/phpFpVVqziconelemondefrgrise1.jpg';
 
 function postToSlack($text, $attachments_text = '', $pretty = true, $avatar_url, $author_name)
 {
@@ -32,7 +30,7 @@ function postToSlack($text, $attachments_text = '', $pretty = true, $avatar_url,
 
   $slackUrl = 'https://slack.com/api/chat.postMessage?token='.SLACK_TOKEN.
     '&channel='.urlencode(SLACK_CHANNEL).
-    '&username='.urlencode(SLACK_BOT_NAME).
+    '&username='.$author_name.
     '&icon_url='.$avatar_url.
     '&text='.urlencode($text);
 
