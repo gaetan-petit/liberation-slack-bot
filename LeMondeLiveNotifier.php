@@ -73,7 +73,7 @@ foreach ($response as $post)
     // extra space for emoji
     $event .= $event ? ' ' : '';
 
-    postToSlack($event.''.$data->comment.' - '.$data->time, true, $data->author_avatar, $data->author_name);
+    postToSlack($event.'Live - '.$data->time, $data->comment, true, $data->author_avatar, $data->author_name);
   }
 }
 
