@@ -64,10 +64,10 @@ foreach ($response as $post)
   if ($post->type == 'cil.comment')
   {
     $data = $post->data;
-    if($db['last_update'] == $data->itemID)
+    if($db['last_update'] <= $data->timestamp)
       continue;
 
-    $db['last_update'] = $data->itemID;
+    $db['last_update'] = $data->timestamp;
     //Event
     $event = ':loudspeaker:';
     // extra space for emoji
