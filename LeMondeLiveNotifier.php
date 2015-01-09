@@ -42,9 +42,8 @@ function postToSlack($text, $attachments_text = '', $pretty = true, $avatar_url,
   if ($attachments_text)
   {
     $slackUrl .= '&attachments='.urlencode('[{"text": "'.$attachments_text.'"}]');
+    file_get_contents($slackUrl);
   }
-
-  var_dump(getUrl($slackUrl));
 }
 
 $dbFile = './LeMondeLiveDB.json';
@@ -64,17 +63,17 @@ foreach ($response as $post)
 {
   if ($post->type == 'cil.comment')
   {
+    $data = $post->data;
     if($db['last_update'] == $data->itemID)
       continue;
 
     $db['last_update'] = $data->itemID;
-    $data = $post->data;
     //Event
     $event = ':loudspeaker:';
     // extra space for emoji
     $event .= $event ? ' ' : '';
 
-    postToSlack($event.''.$data->comment.' - '.$data->time, $data->author_avatar, $data->author_name);
+    postToSlack($event.''.$data->comment.' - '.$data->time, true, $data->author_avatar, $data->author_name);
   }
 }
 
