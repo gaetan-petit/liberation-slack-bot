@@ -64,7 +64,7 @@ foreach ($response as $post)
   if ($post->type == 'cil.comment')
   {
     $data = $post->data;
-    if($db['last_update'] <= $data->timestamp)
+    if($db['last_update'] >= $data->timestamp)
       continue;
 
     $db['last_update'] = $data->timestamp;
