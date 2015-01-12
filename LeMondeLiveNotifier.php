@@ -21,7 +21,7 @@
 include('./Html2Text.php');
 
 // Slack stuff
-const SLACK_TOKEN      = 'xoxp-2283387695-3091405651-3370075113-96d645';
+const SLACK_TOKEN      = 'XXXXXXXXXXXXXXXXXXXXXXXXXX';
 const SLACK_CHANNEL    = '#le-monde-live';
 
 function postToSlack($text, $attachments_text = '', $pretty = true, $avatar_url, $author_name)
