@@ -18,20 +18,23 @@
 /**
  * All the configuration are just below
  */
+include('./Html2Text.php');
 
 // Slack stuff
-const SLACK_TOKEN      = 'XXXXXXXXXXXXXXXXXXXXXXXXXX';
+const SLACK_TOKEN      = 'xoxp-2283387695-3091405651-3370075113-96d645';
 const SLACK_CHANNEL    = '#le-monde-live';
 
 function postToSlack($text, $attachments_text = '', $pretty = true, $avatar_url, $author_name)
 {
-  $attachments_text = str_replace("\n", "", $attachments_text);
+  $html = new \Html2Text\Html2Text($attachments_text);
+  $attachments_text = $html->getText();
+  $attachments_text = str_replace("\n", " ", $attachments_text);
   $attachments_text = str_replace('"', '\"', $attachments_text);
 
   $slackUrl = 'https://slack.com/api/chat.postMessage?token='.SLACK_TOKEN.
     '&channel='.urlencode(SLACK_CHANNEL).
-    '&username='.$author_name.
-    '&icon_url='.$avatar_url.
+    '&username='.urlencode($author_name).
+    '&icon_url='.urlencode($avatar_url).
     '&text='.urlencode($text);
 
   if ($pretty)
@@ -41,9 +44,11 @@ function postToSlack($text, $attachments_text = '', $pretty = true, $avatar_url,
 
   if ($attachments_text)
   {
+    var_dump($attachments_text);
     $slackUrl .= '&attachments='.urlencode('[{"text": "'.$attachments_text.'"}]');
-    file_get_contents($slackUrl);
   }
+  var_dump($slackUrl);
+  file_get_contents($slackUrl);
 }
 
 $dbFile = './LeMondeLiveDB.json';
@@ -59,15 +64,18 @@ if (!$response)
   die();
 }
 
+var_dump('processing response');
+
 foreach ($response as $post)
 {
   if ($post->type == 'cil.comment')
   {
+    var_dump('processing event');
     $data = $post->data;
-    if($db['last_update'] == $data->itemID)
+    if($db['last_update'] >= $data->timestamp)
       continue;
 
-    $db['last_update'] = $data->itemID;
+    $db['last_update'] = $data->timestamp;
     //Event
     $event = ':loudspeaker:';
     // extra space for emoji
