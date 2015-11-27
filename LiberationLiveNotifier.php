@@ -80,7 +80,7 @@ foreach ($response->results as $post) {
 
     //Post to slack
     postToSlack(
-        $event . 'Live - '. $post->modified_at->time,
+        $event . 'Live - '. date('h:i'),
         $post->flavor_text . ' ' . $post->title, $post->content,
         true,
         'https://pbs.twimg.com/profile_images/559638245303005184/Z-sZEX4e_400x400.jpeg',
