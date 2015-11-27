@@ -62,7 +62,13 @@ var_dump('processing response');
 
 
 foreach ($response->results as $post) {
+    if(in_array($post->id, $db['ids'])) {
+        var_dump('duplicate');
+        continue;
+    }
     var_dump('processing event');
+
+    array_push($db['ids'], $post->id);
 
     //Event
     $event = ':loudspeaker:';
@@ -90,7 +96,7 @@ foreach ($response->results as $post) {
 }
 
 //Log last update time
-sleep(2); //avoid duplicate
+sleep(10); //avoid duplicate
 $now = microtime(true);
 $db['last_update'] = $now;
 file_put_contents($dbFile, json_encode($db));
